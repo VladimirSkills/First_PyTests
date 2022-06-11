@@ -14,15 +14,15 @@ class TestCalc:
         assert self.calc.multiply(self, 2, 2) == 5
 
     # Позитивный Тест /:
-    def test_multiply_calculate_division(self):
+    def test_division_calculate_correctly(self):
         assert self.calc.division(self, 10, 2) == 5
 
     # Позитивный Тест -:
-    def test_multiply_calculate_subtraction(self):
+    def test_subtraction_calculate_correctly(self):
         assert self.calc.subtraction(self, 8, 1) == 7
 
     # Позитивный Тест +:
-    def test_multiply_calculate_adding(self):
+    def test_adding_calculate_correctly(self):
         assert self.calc.adding(self, 2, 1) == 3
 
 
