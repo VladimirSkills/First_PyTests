@@ -50,7 +50,10 @@ class PetFriends:
         files = {"pet_photo": open(pet_photo, "rb")}
         res = requests.post(self.base_url + 'api/pets/set_photo/' + pet_id, files=files, headers=headers)
         status = res.status_code
-        result = res.text
+        try:
+            result = res.json()
+        except json.decoder.JSONDecodeError:
+            result = res.text
         return status, result
 
 

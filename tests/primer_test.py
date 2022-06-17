@@ -18,7 +18,7 @@ def test_get_api_key_for_valid_user(email=valid_email, password=valid_password):
 
 
 
-def test_post_add_pet_nofoto(name='King-Pongs', animal_type='Monkey-King', age='177'):
+def test_post_add_pet_nofoto(name='King-Pongs', animal_type='Monkey-King', age='155'):
     """Проверяем создание нового питомца без фото"""
 
     # Запрашиваем ключ api и сохраняем в переменую auth_key
@@ -44,22 +44,22 @@ def test_post_changes_pet_foto(pet_photo=r'../images/king-kong1.jpg'):
     # Добавляем фото
     status, result = pf.post_add_pet_photo(auth_key, pet_photo)
     # Получаем значение картинки1:
-    dict_py1 = json.loads(result)
-    value_image1 = dict_py1.get('pet_photo')
-    print(value_image1)
+    dict_py1 = result.get('pet_photo')
+    #value_image1 = dict_py1.get('pet_photo')
+    print(dict_py1)
 
     #Добавление нового фото:
     pf.post_add_pet_photo(auth_key, r'../images/king-kong2.jpg')
     _, result2 = pf.post_add_pet_photo(auth_key, pet_photo)
 
     # Получаем значение картинки2:
-    dict_py2 = json.loads(result2)
-    value_image2 = dict_py2.get('pet_photo')
-    print(value_image2)
+    dict_py2 = result2.get('pet_photo')
+    #value_image2 = dict_py2.get('pet_photo')
+    print(dict_py2)
 
     # Сверяем полученный ответ с ожидаемым результатом
     assert status == 200
-    assert value_image1 == value_image2
+    assert dict_py1 == dict_py2
 
 
 
