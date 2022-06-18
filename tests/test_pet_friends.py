@@ -308,7 +308,7 @@ def test_big_value_age_update(name='King-Long', animal_type='Gorila-BigAge', age
 
         # Проверяем что статус ответа = 200 и длина возраста не более 3 знаков:
         assert status == 200
-        assert len(result['age']) > 4
+        assert len(result['age']) < 4
     else:
         # если список питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets!")
