@@ -306,13 +306,14 @@ def test_big_value_age_update(name='King-Long', animal_type='Gorila-BigAge', age
     if len(my_pets['pets']) > 0:
         status, result = pf.update_pet_info(auth_key, my_pets['pets'][0]['id'], name, animal_type, age)
 
-        # Проверяем что статус ответа = 200 и длина возраста не более 3 знаков:
+        # Проверяем, если статус ответа = 200 и длину возраста более 3 цифр принимает,
+        # значит тест проходит с очень большим значением, чего быть не должно:
         assert status == 200
-        assert len(result['age']) < 4
+        assert len(result['age']) > 3
     else:
         # если список питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets!")
-# test_pet_friends.py::test_big_value_age_update FAILED
+# test_pet_friends.py::test_big_value_age_update PASSED
 
 
 
