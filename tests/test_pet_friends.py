@@ -214,8 +214,8 @@ def test_on_delete_all_pets():
         pf.add_new_pet(auth_key, "King-Kong", "Gorila", "133", r'../images/king-kong2.jpg')
         _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
 
+    # Сохраняем id первого питомца в списке:
     pet_id = my_pets['pets'][0]['id']
-
     # Получаем в цикле id всех питомцев из списка и отправляем запрос на удаление:
     for id_pet in my_pets["pets"]:
         pf.delete_pet(auth_key, id_pet["id"])
@@ -225,7 +225,8 @@ def test_on_delete_all_pets():
     # print("pet_id::", pet_id)
     # print("my_pets.values::", my_pets.values())
 
-    # Проверяем что статус ответа равен 200 и в списке питомцев нет id никакого питомца
+    # Проверяем, что код = 200 и id первого питомца отсутствует в списке питомцев,
+    # т.е. список должен быть пустым после удаления всех питомцев:
     assert status == 200
     assert pet_id not in my_pets.values()
 # test_pet_friends.py::test_on_delete_all_pets PASSED
