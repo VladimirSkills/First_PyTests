@@ -172,38 +172,7 @@ def test_post_changes_foto(pet_photo=r'../images/king-kong1.jpg'):
 # test_pet_friends.py::test_post_changes_foto PASSED
 
 
-"""4. ПОЗИТИВНЫЙ. Тестируем передачу неверного пароля"""
-def test_get_api_key_for_NOTvalid_password(email=valid_email, password="12345"):
-    # Отправляем запрос и сохраняем полученный ответ с кодом статуса в status, а текст ответа в result
-    status, result = pf.get_api_key(email, password)
-    print(password)
-
-    # Сверяем полученные данные с нашими ожиданиями = 403
-    assert status == 403
-    assert 'key' is not result
-# test_pet_friends.py::test_get_api_key_for_NOTvalid_password PASSED
-
-
-"""5. ПОЗИТИВНЫЙ. Тестируем добавление фото при указании неверного ключа"""
-def test_get_api_key_NOT_valid(pet_photo=r'../images/king-kong2.jpg'):
-    # Получаем полный путь изображения питомца и сохраняем в переменную pet_photo
-    pet_photo = os.path.join(os.path.dirname(__file__), pet_photo)
-
-    # Запрашиваем ключ api и сохраняем в переменую auth_key
-    auth_key = {'key': 'fs61gs651af65afg16adf51g651adfg6g165h1sF65DDF651'}
-
-    # Добавляем фото
-    status, result = pf.post_add_pet_photo(auth_key, pet_photo)
-    print(auth_key)
-    print(result)
-
-    # Сверяем полученный ответ с ожидаемым результатом = 403
-    assert status == 403
-    assert 'Forbidden' in result
-# test_pet_friends.py::test_get_api_key_NOT_valid PASSED
-
-
-"""6. ПОЗИТИВНЫЙ. Тестируем удаление всех питомцев"""
+"""4. ПОЗИТИВНЫЙ. Тестируем удаление всех питомцев"""
 def test_on_delete_all_pets():
     # Получаем ключ auth_key и запрашиваем список своих питомцев
     _, auth_key = pf.get_api_key(valid_email, valid_password)
@@ -232,7 +201,38 @@ def test_on_delete_all_pets():
 # test_pet_friends.py::test_on_delete_all_pets PASSED
 
 
-"""7. ПОЗИТИВНЫЙ. Тестируем код по удалению питомца без указания id."""
+"""5. НЕГАТИВНЫЙ. Тестируем передачу неверного пароля"""
+def test_get_api_key_for_NOTvalid_password(email=valid_email, password="12345"):
+    # Отправляем запрос и сохраняем полученный ответ с кодом статуса в status, а текст ответа в result
+    status, result = pf.get_api_key(email, password)
+    print(password)
+
+    # Сверяем полученные данные с нашими ожиданиями = 403
+    assert status == 403
+    assert 'key' is not result
+# test_pet_friends.py::test_get_api_key_for_NOTvalid_password PASSED
+
+
+"""6. НЕГАТИВНЫЙ. Тестируем добавление фото при указании неверного ключа"""
+def test_get_api_key_NOT_valid(pet_photo=r'../images/king-kong2.jpg'):
+    # Получаем полный путь изображения питомца и сохраняем в переменную pet_photo
+    pet_photo = os.path.join(os.path.dirname(__file__), pet_photo)
+
+    # Запрашиваем ключ api и сохраняем в переменую auth_key
+    auth_key = {'key': 'fs61gs651af65afg16adf51g651adfg6g165h1sF65DDF651'}
+
+    # Добавляем фото
+    status, result = pf.post_add_pet_photo(auth_key, pet_photo)
+    print(auth_key)
+    print(result)
+
+    # Сверяем полученный ответ с ожидаемым результатом = 403
+    assert status == 403
+    assert 'Forbidden' in result
+# test_pet_friends.py::test_get_api_key_NOT_valid PASSED
+
+
+"""7. НЕГАТИВНЫЙ. Тестируем код по удалению питомца без указания id."""
 def test_delete_self_pet_without_id():
 
     # Получаем ключ auth_key и запрашиваем список своих питомцев
@@ -258,7 +258,7 @@ def test_delete_self_pet_without_id():
 # test_pet_friends.py::test_delete_self_pet_without_id PASSED
 
 
-"""8. ПОЗИТИВНЫЙ. Тестируем обновление информации о питомце при указании неверного id"""
+"""8. НЕГАТИВНЫЙ. Тестируем обновление информации о питомце при указании неверного id"""
 def test_false_id_update_self_pet_info(name='Ding-Dong', animal_type='Gorila/Monkey', age=190):
 
     # Получаем ключ auth_key и список своих питомцев
