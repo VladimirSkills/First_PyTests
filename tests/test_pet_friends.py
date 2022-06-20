@@ -258,7 +258,27 @@ def test_delete_self_pet_without_id():
 # test_pet_friends.py::test_delete_self_pet_without_id PASSED
 
 
-"""8. НЕГАТИВНЫЙ. Тестируем добавление фото с неверным указанием расширения. Верно: jpg"""
+"""8. ПОЗИТИВНЫЙ. Тестируем обновление информации о питомце при указании неверного id"""
+def test_false_id_update_self_pet_info(name='Ding-Dong', animal_type='Gorila/Monkey', age=190):
+
+    # Получаем ключ auth_key и список своих питомцев
+    _, auth_key = pf.get_api_key(valid_email, valid_password)
+    _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
+
+    # Если список не пустой, то пробуем обновить его имя, тип и возраст, изменив id первого питомца:
+    if len(my_pets['pets']) > 0:
+        status, result = pf.update_pet_info(auth_key, my_pets['pets'][0]['id'] + "2d3r", name, animal_type, age)
+        print(f"\nНеверный id: {my_pets['pets'][0]['id'] + '2d3r'}")
+
+        # Проверяем что статус ответа = 400
+        assert status == 400
+    else:
+        # если список питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
+        raise Exception("There is no my pets!")
+# time_data.py::test_successful_update_self_pet_info PASSED
+
+
+"""9. НЕГАТИВНЫЙ. Тестируем добавление фото с неверным указанием расширения. Верно: jpg"""
 def test_post_add_NoneFoto_to_pet(pet_photo=r'../images/king-kong2.jpeg'):
 
     # Получаем полный путь изображения питомца и сохраняем в переменную pet_photo
@@ -278,7 +298,7 @@ def test_post_add_NoneFoto_to_pet(pet_photo=r'../images/king-kong2.jpeg'):
 # test_pet_friends.py::test_post_add_NoneFoto_to_pet FAILED
 
 
-"""9. НЕГАТИВНЫЙ. Тестируем передачу не всех параметров в запросе"""
+"""10. НЕГАТИВНЫЙ. Тестируем передачу не всех параметров в запросе"""
 def test_post_add_pet_NOTvalid_param(name='King-Bongs', age='122'):
 
     # Запрашиваем ключ api и сохраняем в переменую auth_key
@@ -293,7 +313,7 @@ def test_post_add_pet_NOTvalid_param(name='King-Bongs', age='122'):
 # test_pet_friends.py::test_post_add_pet_NOTvalid_param FAILED
 
 
-"""10. НЕГАТИВНЫЙ. Тестируем добавление большого значения
+"""11. НЕГАТИВНЫЙ. Тестируем добавление большого значения
 (в т.ч. экспоненциальное = 3.138886636534116e+73)
 через параметр возраст. В переменной age2 - 2368 цифры."""
 def test_big_value_age_update(name='King-Long', animal_type='Gorila-BigAge', age=age2):
@@ -315,6 +335,4 @@ def test_big_value_age_update(name='King-Long', animal_type='Gorila-BigAge', age
         # если список питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets!")
 # test_pet_friends.py::test_big_value_age_update PASSED
-
-
 
