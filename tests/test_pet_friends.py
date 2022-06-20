@@ -18,7 +18,7 @@ def test_get_api_key_for_valid_user(email=valid_email, password=valid_password):
 # test_pet_friends.py::test_get_api_key_for_valid_user PASSED
 
 
-def test_get_all_pets_with_valid_key(filter=''):
+def test_get_all_pets_with_valid_key(filter='my_pets'):
     """ Проверяем что запрос всех питомцев возвращает не пустой список.
     Для этого сначала получаем api ключ и сохраняем в переменную auth_key. Далее используя этого ключ
     запрашиваем список всех питомцев и проверяем что список не пустой.
@@ -33,6 +33,10 @@ def test_get_all_pets_with_valid_key(filter=''):
     #     print(id_pet["id"])
     #     count += 1
     # print(f'Всего ID: {count} шт.')
+
+    # Преобразуем ответ json формата в Python и выгружаем в файл:
+    with open("out_json.json", 'w', encoding='utf8') as write:  # Создаём файл для записи
+        json.dump(result, write, ensure_ascii=False, indent=4)  # Выводим читабельный формат
 
     assert status == 200
     assert len(result['pets']) > 0
@@ -101,7 +105,6 @@ def test_successful_update_self_pet_info(name='Ping-Pong', animal_type='Gorila/M
         # если список питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets!")
 # test_pet_friends.py::test_successful_update_self_pet_info PASSED
-
 
 
 """ДЕСЯТЬ ДОПОЛНИТЕЛЬНЫХ ТЕСТ-КЕЙСОВ"""
@@ -335,4 +338,3 @@ def test_big_value_age_update(name='King-Long', animal_type='Gorila-BigAge', age
         # если список питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets!")
 # test_pet_friends.py::test_big_value_age_update PASSED
-
