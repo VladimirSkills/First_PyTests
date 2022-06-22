@@ -24,13 +24,17 @@ def get_list_pets(auth_key: json, filter: str = "") -> json:
     headers = {'auth_key': auth_key}
     filter = {'filter': filter}
     base_url = 'https://petfriends.skillfactory.ru/'
-    res = requests.get(base_url + 'api/pets', headers=headers, params=filter)
+    res = requests.get(base_url + 'api/pets', headers=headers, params=filter)  # headers={'one': 'true'}
+    # Вывод заголовков:
+    content = res.headers
+    optional = res.request.headers
+
     status = res.status_code
     try:
         result = res.json()
     except:
         result = res.text
-    return status, result
+    return status, result, content, optional
 
 print(get_list_pets(auth_key_x, 'my_pets'))
 
